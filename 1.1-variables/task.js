@@ -6,22 +6,53 @@
  */
 
 function averageMark(a, g, p) {
-	
-    // реализуйте здесь задание №1
-    
-	return // ваш ответ;
+ /*
+  так как явно не указано количество оценок по каждому предмету - предполагаем неопределенное количество
+  средняя оценка по трем предметам считается на основании не общего количества всех оценок, а на основании средних по каждому предмету     
+ */
+
+	let algebra = String(a);
+	let geography = String(g);
+	let physics = String(p);
+	let avrAlgebra = 0;
+	let avrGeography = 0; 
+	let avrPhysics = 0;
+
+
+	for (let i = 0; i < algebra.length; i++ ) {
+		avrAlgebra = avrAlgebra + Number(algebra[i]); 
+	}     
+	avrAlgebra = avrAlgebra/algebra.length;  
+
+    for (let i = 0; i < geography.length; i++ ) {
+		avrGeography = avrGeography + Number(geography[i]); 
+	}     
+	avrGeography = avrGeography/geography.length;
+
+    for (let i = 0; i < physics.length; i++ ) {
+		avrPhysics = avrPhysics + Number(physics[i]); 
+	}     
+	avrPhysics = avrPhysics/physics.length;	 
+
+       
+	return ((avrAlgebra+avrGeography+avrPhysics)/3);
 }
 
 function sayHello(userName) {
 	
-    // реализуйте здесь задание №2
+    let myName = userName;
+    let message = `Привет, мир! Меня зовут ${myName}`
     
-	return // ваш ответ;
+	return message;
 }
 
 function calculateFormula() {
     
-	// реализуйте здесь задание №3
+	let x = 2;
+	let y = 22;
+	let z = 0;
+
+	result = x * y + 5 * z + x - 1; 
     
-    return // ваш ответ;
+    return result;
 }
