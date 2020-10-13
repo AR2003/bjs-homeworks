@@ -9,25 +9,25 @@ function calculateTotalMortgage(percent, contribution, amount, date) {
 	let numberedAmount = checkTypeNumber(amount);
 
 	if  (numberedPercent == "typeError") {
-       alert(`Параметр ставка кредита(percent) содержит неправильное значение ${percent}`);
-       return;  
+       return(`Параметр ставка кредита(percent) содержит неправильное значение ${percent}`);
+         
  	}
     
     
 	if  (numberedContribution == "typeError") {
-       alert(`Параметр сумма первоначального взноса(contribution) содержит неправильное значение ${contribution}`);
-       return;  
+       return(`Параметр сумма первоначального взноса(contribution) содержит неправильное значение ${contribution}`);
+         
  	}      
 
     
 	if  (numberedAmount == "typeError") {
-       alert(`Параметр сумма кредита(amount) содержит неправильное значение ${amount}`);
-       return;  
+       return(`Параметр сумма кредита(amount) содержит неправильное значение ${amount}`);
+         
  	}     
 
- 	    
+ 	  numberedPercent = numberedPercent/12/100;    
     let calculationPeriod = (date.getFullYear() - new Date().getFullYear())*12 - new Date().getMonth() + date.getMonth();  
-    let totalMortgage =  (numberedAmount - numberedContribution)*(numberedPercent/12/100 + (numberedPercent/12/100)/((Math.pow(1+numberedPercent/12/100,calculationPeriod)-1)))*calculationPeriod;
+    let totalMortgage =  (numberedAmount - numberedContribution)*(numberedPercent + (numberedPercent)/((Math.pow(1+numberedPercent,calculationPeriod)-1)))*calculationPeriod;
     
     console.log(totalMortgage.toFixed(2));
     return Number(totalMortgage.toFixed(2));
@@ -36,21 +36,20 @@ function calculateTotalMortgage(percent, contribution, amount, date) {
 }
 
 function getGreeting(name) {
-    let greeting = ''; 
-	if (typeof(name) == "string") {		
-		greeting = `Привет, мир! Меня зовут ${name}`;
-	} else {
-		greeting = `Привет, мир! Меня зовут Аноним`;
-		alert(`Привет, мир! Меня зовут Аноним`);
-	}
-
-     alert(greeting);
-     console.log(greeting);
-     return greeting;
+    let greeting = ''; 	
+		greeting = `Привет, мир! Меня зовут ${((String(name)=="null")||(String(name)=="undefined")||(name.trim().length==0))? "Аноним" : name}`;
+	  console.log(greeting);
+    return greeting;
    
 }
 
 function checkTypeNumber(inputParameter) {
+  if (isNaN(Number(inputParameter)) == true)  {
+      return("typeError");        
+    } else  {
+      return Number(inputParameter);
+    }
+    
 	if (typeof(Number(inputParameter)) === "number")  {
        return Number(inputParameter); 
     } 
