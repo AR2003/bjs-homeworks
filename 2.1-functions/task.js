@@ -65,7 +65,7 @@ function getAverageMark(marks) {
   if (marks.length == 0) {
   	return averageMark;
   } else {
-  	return averageMark;
+  	return averageMark/marks.length;
   }
 }
 
@@ -91,12 +91,7 @@ function getPersonData(secretData) {
 
 
 function getDecodedValue(secret) {
-	if (secret == 0) {
-		return "Родриго";
-	} else if  (secret == 1) {
-        return "Эмильо";
-	}
-
+	return (secret == 0 ? "Родриго" : "Эмильо");
 }
 
 console.log( getPersonData({
