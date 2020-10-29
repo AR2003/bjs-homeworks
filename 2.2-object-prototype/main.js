@@ -20,3 +20,6 @@ function initCheckBirthday() {
 
     document.getElementById('disclaimer').innerHTML = result;   
 }
+
+ 
+   
