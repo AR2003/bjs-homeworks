@@ -3,27 +3,20 @@
 
 function parseCount(inputParameter) {
 	let quantity = parseInt(inputParameter, 10);
-	try { 
 		if (Number.isNaN(quantity)) {
           throw new Error("Невалидное значение");
-		  } 
 		} 
-		catch (e) {
-			throw (e);
-		}
-	 
-    return quantity;
+  return quantity;
 }
 
 
 function validateCount(inputParameter) {	
-	try { 
-		let quantity = parseCount(inputParameter);
-		return quantity;
-		}  catch(e) {
-		 console.log("ошибка парсинга" + e);	
-         return e;   
-		}	
+	try { 		
+		return parseCount(inputParameter);
+	} catch(e) { 
+		console.log("Невалидное значение");	
+    return e;   
+	}	
    
 }
 
@@ -32,33 +25,20 @@ function validateCount(inputParameter) {
 
 
 class Triangle {
-	constructor (a,b,c) {
-	  try {	
+	constructor (a,b,c) {	 
 	  if (((a+b) < c) || ((a+c) < b) || ((b+c) < a)) {
 	  	throw new Error("Треугольник с такими сторонами не существует");
 	  }
       this.sideA = a;
       this.sideB = b;
-      this.sideC = c;
-      this.validationError = false; 
-      }
-      catch (e) {
-        this.validationError = true;
-      }	
-      
+      this.sideC = c;   
 	}
     
-    getPerimeter () { 
-     if (this.validationError) {
-     	return("Ошибка! Треугольник не существует");
-     }	
+    getPerimeter () {   
       return(this.sideA + this.sideB + this.sideC);
     }
 
-     getArea () { 
-      if (this.validationError) {
-     	return("Ошибка! Треугольник не существует");
-      }	
+     getArea () {       
       let halfP = this.getPerimeter()/2;
       let S = Math.sqrt(halfP*(halfP-this.sideA)*(halfP-this.sideB)*(halfP-this.sideC));      
       return +S.toFixed(3);
@@ -69,9 +49,16 @@ class Triangle {
 function getTriangle(a,b,c) {
 	try {
 	  triangleObject = new Triangle(a,b,c);
-      } catch (e) {
-
-      } 
-      return triangleObject;
+  } catch (e) {
+         triangleObject = {
+          getPerimeter: function() {
+            return("Ошибка! Треугольник не существует"); 
+          } ,
+          getArea: function() {
+            return("Ошибка! Треугольник не существует"); 
+          }
+        } 
+  } 
+  return triangleObject;
 }
 
