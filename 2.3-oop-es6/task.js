@@ -141,67 +141,58 @@ console.log("Количество книг после выдачи: " + library.
 class StudentLog {
 	constructor (name) {
 		this.name = name;
-		this.algebra = [],
-	    this.geometry = [],
-	    this.russian = [],
-	    this.physics = [],
-	    this.music = [],
-	    this.english = [],
-	    this.poetry = [],
-	    this.chemistry = [],
-	    this.french = []				
+    this.marksArray = [];		
 	}
 
     getName ()  {
     	return this.name;
     }
 
+
     addGrade(grade, subject) {
-    	for (let subjectCounter in this) {
-    		if (subjectCounter == subject) {
-    			if ((grade >= 1) && (grade <= 5)) {
-    			  this[subject].push(grade);	
-    			} else {
-    				console.log(`Вы пытались поставить оценку ${grade} по предмету ${subject}. Допускаются только числа от 1 до 5`);
-    			}   
-    			return this[subject].length; 			
-    		}
-    	}
-    	console.log(`Вы пытались поставить оценку ${grade} по неизвестному предмету ${subject}.`)  
-    	return null  	
+       if ((typeof(grade) !== "number") || (grade < 1) || (grade > 5) ) {
+         console.log(`Вы пытались поставить оценку ${grade} по предмету ${subject}. Допускаются только числа от 1 до 5`);
+         return null ;
+       }
     	 
+       let markTransaction = {
+          subject: subject,
+          grade: grade,   
+       } 
+    	 this.marksArray.push(markTransaction);	
+       let markCounter = 0; 
+       for (let i=0; i < this.marksArray.length; i++) {
+         if (this.marksArray[i].subject == subject) {
+          markCounter++;
+         }  
+       } 
+    	 return markCounter;    	 
     	}  
 
-    getAverageBySubject(subject) {
-    	if (!this.hasOwnProperty(subject)) {
-    	   console.log(`Вы пытались получить средний балл по несуществующему предмету ${subject}.`)
-    	   return null   	
-    	} 
-    	let marksSumma = 0; 
-        for (let i = 0; i < this[subject].length; i++) {
-            marksSumma += this[subject][i]; 
+
+    getAverageBySubject(subject) {    	
+    	  let marksSumma = 0; 
+        let markCounter = 0;
+        for (let i = 0; i < this.marksArray.length; i++) {
+            if (this.marksArray[i].subject == subject) {
+              markCounter++;
+              marksSumma += this.marksArray[i].grade;
+           }             
         }
-        if (this[subject].length !== 0) {
-         return marksSumma/this[subject].length
+        if (markCounter !== 0) {
+         return marksSumma/markCounter
         } else {return 0
           }
     }	    
 
 
-    getTotalAverage() {
-      let subjectArray = ["algebra","geometry","russian","physics","music","english","poetry","chemistry","french"];
-      let averageMarksSumma = 0;
-      let nonZeroAverageMarks = 0;
-      let averageSubjectMark = 0;
-      for (let i=0 ; i < subjectArray.length; i++) {
-         averageSubjectMark = this.getAverageBySubject(subjectArray[i]);
-         if (averageSubjectMark !== 0) {
-           averageMarksSumma += averageSubjectMark;
-           nonZeroAverageMarks++;
-         } 
+    getTotalAverage() {  
+      let totalAverageMark = 0;
+      for (let i=0 ; i < this.marksArray.length; i++) {         
+         totalAverageMark += this.marksArray[i].grade;             
       }
-      if (nonZeroAverageMarks !==0) {
-        return averageMarksSumma/nonZeroAverageMarks;
+      if (this.marksArray.length !==0) {
+        return totalAverageMark/this.marksArray.length;
       }  
     }
 
