@@ -21,26 +21,41 @@ class AlarmClock {
 
 	removeClock(id) { 
 		let numberElementsBefore = this.alarmCollection.length;
-		this.alarmcollection = this.alarmCollection.filter(alarm => alarm.alarmId !== id)
+		this.alarmCollection = this.alarmCollection.filter(alarm => alarm.alarmId !== id)
         if (this.alarmCollection.length > numberElementsBefore) {return true}; 
         return false; 
 	}
 
 	getCurrentFormattedTime() {
 		let currentFormattedTime = new Date(); 
-		return String(currentFormattedTime.getHours())+":"+String(currentFormattedTime.getMinutes()); 
+		return String(currentFormattedTime).substr(16,5);
+	// альтернативное форматирование времени	
+    //       return (String(currentFormattedTime.getHours()).length ==2) ?  String(currentFormattedTime.getHours()) : ("0"+String(currentFormattedTime.getHours()))+":"+
+	// (String(currentFormattedTime.getMinutes()).length ==2) ?  String(currentFormattedTime.getMinutes()) : ("0"+String(currentFormattedTime.getMinutes())) 
+
 	}
 
-	
+	// checkClock() {
+	// 	this.alarmCollection.forEach(item => {let currentTime = this.getCurrentFormattedTime();
+	// 	    if (currentTime == item.time)	{
+	// 	  	item.callback();
+	// 	    }
+	// 	} )	
+	// } 
+    
     
 	start () {
-		
-		if (this.timerId == undefined) {
-			this.timerId = setInterval(this.alarmCollection.forEach(item => {let currentTime = this.getCurrentFormattedTime();
+
+	function checkClock(th) {
+		th.alarmCollection.forEach(item => {let currentTime = th.getCurrentFormattedTime();
 		    if (currentTime == item.time)	{
 		  	item.callback();
 		    }
-		  } ), 5000)
+		} )	
+	} 
+		
+		if (this.timerId == undefined) {
+			this.timerId = setInterval(() => checkClock(th), 5000)
 		}
 		
 	}
